@@ -1,0 +1,52 @@
+1.
+SELECT
+id,
+username,
+birthdate,
+TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age 
+FROM `users`;
+
+2.
+SELECT *
+FROM `posts` WHERE id NOT IN (SELECT `post_id` FROM `likes`):
+
+3.
+SELECT posts.id, 
+COUNT(likes.post_id) AS likes 
+FROM posts 
+LEFT JOIN likes ON likes.post_id = posts.id 
+GROUP BY posts.id 
+HAVING COUNT(likes.post_id) > 0; 
+
+4.
+SELECT users.id,
+COUNT(media.user_id) AS total_media 
+FROM users 
+LEFT JOIN media ON media.user_id = users.id 
+GROUP BY users.id 
+ORDER BY COUNT(media.user_id) DESC;
+
+5.
+SELECT users.id, 
+SUM(likes.post_id) AS total_likes
+FROM users 
+JOIN posts ON posts.user_id = users.id 
+LEFT JOIN likes ON likes.post_id = posts.id 
+GROUP BY users.id 
+ORDER BY SUM(likes.post_id) DESC;
+
+6.
+SELECT posts.* 
+FROM posts 
+JOIN users ON posts.user_id = users.id 
+WHERE YEAR(CURDATE()) - YEAR(users.birthdate) BETWEEN 20 AND 30;
+
+7.
+SELECT users.id, 
+COUNT(posts.id) AS n_post, 
+COUNT(medias.id) AS n_media 
+FROM users 
+LEFT JOIN posts ON users.id = posts.user_id 
+LEFT JOIN medias ON users.id = medias.user_id 
+GROUP BY users.id;
+
