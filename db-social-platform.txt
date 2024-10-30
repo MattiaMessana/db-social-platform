@@ -1,4 +1,4 @@
-1.
+1. Seleziona tutti gli utenti e calcolane l'età 
 SELECT
 id,
 username,
@@ -6,11 +6,11 @@ birthdate,
 TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age 
 FROM `users`;
 
-2.
+2. Seleziona tutti i post senza Like
 SELECT *
 FROM `posts` WHERE id NOT IN (SELECT `post_id` FROM `likes`):
 
-3.
+3. Conta il numero di like per ogni post
 SELECT posts.id, 
 COUNT(likes.post_id) AS likes 
 FROM posts 
@@ -18,7 +18,7 @@ LEFT JOIN likes ON likes.post_id = posts.id
 GROUP BY posts.id 
 HAVING COUNT(likes.post_id) > 0; 
 
-4.
+4.  Ordina gli utenti per il numero di media caricati
 SELECT users.id,
 COUNT(media.user_id) AS total_media 
 FROM users 
@@ -26,7 +26,7 @@ LEFT JOIN media ON media.user_id = users.id
 GROUP BY users.id 
 ORDER BY COUNT(media.user_id) DESC;
 
-5.
+5. Ordina gli utenti per totale di likes ricevuti nei loro posts
 SELECT users.id, 
 SUM(likes.post_id) AS total_likes
 FROM users 
@@ -35,13 +35,13 @@ LEFT JOIN likes ON likes.post_id = posts.id
 GROUP BY users.id 
 ORDER BY SUM(likes.post_id) DESC;
 
-6.
+6. Seleziona tutti i post degli utenti tra i 20 e i 30 anni
 SELECT posts.* 
 FROM posts 
 JOIN users ON posts.user_id = users.id 
 WHERE YEAR(CURDATE()) - YEAR(users.birthdate) BETWEEN 20 AND 30;
 
-7.
+7. Seleziona il numero di post e di media per ogni utente 
 SELECT users.id, 
 COUNT(posts.id) AS n_post, 
 COUNT(medias.id) AS n_media 
